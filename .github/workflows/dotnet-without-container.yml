@@ -6,7 +6,7 @@ on:
       arc_runner_set_name: {
         description: 'The name of the self-hosted Arc Runner Set',
         required: true,
-        default: 'arc-runner-set'
+        default: 'arc-runner-set-storage'
       }
     }
   }
