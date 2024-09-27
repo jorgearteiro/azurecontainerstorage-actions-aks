@@ -1,4 +1,4 @@
-using azurefiles_actions_aks.Components;
+using azurecontainerstorage_actions_aks.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
