@@ -4,9 +4,12 @@ On this tutorial, you can learn how to use Azure Container Storage to Ephemeral 
 
 Azure Files share allows a volume to be mounted in multiple AKS pods and it's great for caching. and Azure Container Storage have a great, replicated and fast NVMe Ephemeral disks/volume creation that can be used as temporary disks for Github Actions jobs.
 
-![Solution Architecture](./docs/images/Tutorial_Solution_Architecture.png)
+![Solution Architecture](./docs/images/Tutorial_Solution_Architecture_Container_Storage.png)
 
 Learn more here about [GitHub ARC](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/about-actions-runner-controller), [Azure File share](https://learn.microsoft.com/en-us/azure/aks/azure-files-csi) and [Azure Container Storage](https://learn.microsoft.com/en-us/azure/storage/container-storage/]) running on Kubernetes.
+
+On this solution we are using [Metadata caching for premium SMB file shares](https://learn.microsoft.com/en-us/azure/storage/files/smb-performance#metadata-caching-for-premium-smb-file-shares). It's an enhancement for SMB Azure premium file shares aimed to reduce metadata latency, increase available IOPS, and boost network throughput. This preview feature improves the following metadata APIs and can be used from both Windows and Linux clients: Create, Open, Close and Delete.
+To onboard, [sign up for the public preview](https://aka.ms/PremiumFilesMetadataCachingPreview) and they will provide you with additional details. Currently this preview feature is only available for premium SMB file shares (file shares in the FileStorage storage account kind). There are no additional costs associated with using this feature.
 
 ## Pre-requisites
 
