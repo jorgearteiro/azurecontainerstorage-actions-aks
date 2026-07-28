@@ -55,8 +55,13 @@ stays selectable at dispatch time.
 
 - **Names must stay in sync across files.** The Azure Files share name (`metadatacaching`),
   the namespace (`arc-runners-storage`), the resource group (`aks-storage-actions`), and
-  the secret name (`azure-storage-secret`) are hardcoded in `install/*.yaml` and referenced
+  the storage account name are hardcoded in `install/*.yaml` and referenced
   by `README.md` commands. Change one, change all matching references.
+- **Storage auth is identity-based (keyless).** The Azure Files SMB share is mounted with a
+  user-assigned managed identity (the AKS kubelet identity) via `mountWithManagedIdentity: "true"`
+  in `install/arc-runners-set-storage-pv-pvc.yaml`. There is no `azure-storage-secret` and no
+  storage account key — the account has shared key access disabled and SMB OAuth enabled, and the
+  kubelet identity holds the `Storage File Data SMB MI Admin` role. Do not reintroduce key/secret auth.
 - **`fsGroup: 123`** is required on runner pod specs — it is the GID of the GitHub
   runner image's default user. Preserve it when editing pod templates.
 - **`install/arc-runners-permissions.yaml` is reference-only** — its header says not to
@@ -76,4 +81,5 @@ stays selectable at dispatch time.
 `README.md` contains an example `-----BEGIN RSA PRIVATE KEY-----` block for the GitHub
 App secret. It is a placeholder/dummy, not a live credential. Never commit real storage
 keys, PATs, or GitHub App private keys — they are created at deploy time as Kubernetes
-secrets (`azure-storage-secret`, `arc-runner-github-secret`).
+secrets (`arc-runner-github-secret`). Azure Storage access is keyless (managed identity), so
+there is no storage key or `azure-storage-secret` to protect.
